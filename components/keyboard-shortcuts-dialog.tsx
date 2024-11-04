@@ -27,7 +27,7 @@ export function KeyboardShortcutsDialog({ shortcuts }: KeyboardShortcutsDialogPr
     switch (key.toLowerCase()) {
       case 'enter':
         return 'Enter';
-      case 'delete':
+      case 'backspace':
         return 'Delete';
       case ',':
         return ',';
@@ -51,7 +51,7 @@ export function KeyboardShortcutsDialog({ shortcuts }: KeyboardShortcutsDialogPr
         <div className="space-y-2">
           {shortcuts.map((shortcut, i) => (
             <div key={i}>
-              <div className="flex items-center justify-between pt-1 pb-3">
+              <div className="flex items-center justify-between py-2">
                 <span className="text-sm text-muted-foreground">
                   {shortcut.description}
                 </span>

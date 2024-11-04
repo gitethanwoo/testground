@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LLM Flow Builder
 
-## Getting Started
+A visual tool for experimenting with and iterating on LLM (Large Language Model) prompt chains and flows.
 
-First, run the development server:
+## Why This Tool?
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Building effective AI applications requires careful attention to:
+- Prompt engineering and iteration
+- Breaking down complex prompts into smaller, focused steps
+- Managing data flow between different prompts
+- Structured output handling
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This tool makes this process faster and more intuitive by providing a visual interface for building and testing LLM flows.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Key Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 🧱 Modular Blocks
+- **Input Blocks**: Define variables and prompts
+- **Generate Blocks**: Create LLM-powered transformations
+- Chain blocks together to create complex flows
 
-## Learn More
+### 🔄 Rapid Iteration
+- Real-time testing of individual blocks
+- Execute entire flows with one click
+- Quick adjustments to prompts and settings
 
-To learn more about Next.js, take a look at the following resources:
+### 📊 Structured Data Handling
+- Toggle between unstructured text and JSON outputs
+- Define custom object shapes for structured responses
+- Seamlessly pass data between blocks
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### ⚡ Efficient Workflow
+- Keyboard shortcuts for common actions
+- Reference previous blocks' outputs
+- Visual feedback for execution status
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Example Use Case: Meeting Intelligence Pipeline
 
-## Deploy on Vercel
+Here's a practical example of how to transform a raw meeting transcript into useful formats, using simple, flat structures:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Input Block**: Raw Grain/Otter.ai transcript
+   ```typescript
+   // Input format: plain text
+   "Speaker 1 (00:00): Hey team, let's discuss the Q4 roadmap...
+    Speaker 2 (00:15): I think we should prioritize the API redesign..."
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. **Generate Block 1**: Speaker Message Extraction
+   ```typescript
+   // Output shape: Array of simple messages
+   [
+     {
+       speaker: "Speaker 1",
+       message: "Hey team, let's discuss the Q4 roadmap"
+     },
+     {
+       speaker: "Speaker 2",
+       message: "I think we should prioritize the API redesign"
+     }
+   ]
+   ```
+
+3. **Generate Block 2**: Topic List
+   ```typescript
+   // Output shape: Array of topics
+   [
+     "Q4 Planning",
+     "API Redesign",
+     "Resource Allocation",
+     "Timeline Discussion"
+   ]
+   ```
+
+4. **Generate Block 3**: Action Items
+   ```typescript
+   // Output shape: Array of tasks
+   [
+     {
+       task: "Schedule API design review",
+       owner: "John",
+       deadline: "Next Friday"
+     },
+     {
+       task: "Create resource allocation doc",
+       owner: "Sarah",
+       deadline: "Tomorrow"
+     }
+   ]
+   ```
+
+5. **Generate Block 4**: Key Takeaways
+   ```typescript
+   // Output shape: Simple object with flat parameters
+   {
+     mainDecision: "Team will prioritize API redesign in Q4",
+     nextStep: "Schedule design review meeting",
+     followupDate: "Next Monday",
+     priority: "High"
+   }
+   ```
+
+Each block uses one of the supported output types:
+- Simple arrays of strings
+- Arrays of flat objects
+- Single objects with flat parameters
+
+This flow demonstrates how to break down complex meeting analysis into simple, manageable steps that work within the current constraints of the tool.

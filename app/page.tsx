@@ -17,6 +17,7 @@ import { Kbd } from "@/components/ui/kbd";
 import { useKeyboardShortcuts } from "./hooks/use-keyboard-shortcuts";
 import { useBlocks } from "../app/hooks/use-blocks";
 import { KeyboardShortcutsDialog } from "../components/keyboard-shortcuts-dialog";
+import { createShortcuts } from "./config/keyboard-shortcuts";
 
 export default function Component() {
   const [blocks, setBlocks] = useState<Block[]>([]);
@@ -100,112 +101,15 @@ export default function Component() {
   };
 
   const { shortcuts } = useKeyboardShortcuts({
-    shortcuts: [
-      {
-        key: 'Enter',
-        cmd: true,
-        description: 'Execute current block',
-        handler: () => {
-          const blockElement = document.activeElement?.closest("[data-block-id]");
-          if (blockElement) {
-            const blockId = blockElement.getAttribute("data-block-id");
-            const blockIndex = blocks.findIndex((b) => b.id === blockId);
-            if (blockIndex !== -1 && blocks[blockIndex].type === "Generate") {
-              executeBlock(blockIndex);
-            }
-          }
-        },
-      },
-      {
-        key: 'Enter',
-        cmd: true,
-        shift: true,
-        description: 'Execute flow',
-        handler: () => executeFlow(),
-      },
-      {
-        key: 'Backspace',
-        cmd: true,
-        description: 'Delete current block',
-        handler: (e) => {
-          e.preventDefault();
-          const blockElement = document.activeElement?.closest("[data-block-id]");
-          if (blockElement) {
-            const blockId = blockElement.getAttribute("data-block-id");
-            if (blockId) removeBlock(blockId);
-          }
-        },
-      },
-      {
-        key: '/',
-        cmd: true,
-        description: 'Open settings for current block',
-        handler: (e) => {
-          e.preventDefault();
-          const blockElement = document.activeElement?.closest("[data-block-id]");
-          if (blockElement) {
-            const blockId = blockElement.getAttribute("data-block-id");
-            setOpenSettingsId(blockId);
-          }
-        },
-      },
-      {
-        key: 'ArrowUp',
-        alt: true,
-        description: 'Collapse block',
-        handler: (e) => {
-          e.preventDefault();
-          const blockElement = document.activeElement?.closest("[data-block-id]");
-          if (blockElement) {
-            const blockId = blockElement.getAttribute("data-block-id");
-            if (blockId) {
-              const block = blocks.find(b => b.id === blockId);
-              if (block?.expanded) {
-                toggleBlockExpanded(blockId);
-              }
-            }
-          }
-        },
-      },
-      {
-        key: 'ArrowDown',
-        alt: true,
-        description: 'Expand block',
-        handler: (e) => {
-          e.preventDefault();
-          const blockElement = document.activeElement?.closest("[data-block-id]");
-          if (blockElement) {
-            const blockId = blockElement.getAttribute("data-block-id");
-            if (blockId) {
-              const block = blocks.find(b => b.id === blockId);
-              if (!block?.expanded) {
-                toggleBlockExpanded(blockId);
-              }
-            }
-          }
-        },
-      },
-      {
-        key: 'g',
-        cmd: true,
-        shift: true,
-        description: 'Add Generate block',
-        handler: (e) => {
-          e.preventDefault();
-          addBlock("Generate");
-        },
-      },
-      {
-        key: 'i',
-        cmd: true,
-        shift: true,
-        description: 'Add Input block',
-        handler: (e) => {
-          e.preventDefault();
-          addBlock("Input");
-        },
-      },
-    ],
+    shortcuts: createShortcuts({
+      blocks,
+      executeBlock,
+      executeFlow,
+      removeBlock,
+      setOpenSettingsId,
+      toggleBlockExpanded,
+      addBlock,
+    }),
   });
 
   return (

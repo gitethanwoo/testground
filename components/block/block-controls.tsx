@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Settings2, Play, ChevronDown, ChevronUp, X, Command, MoreVertical } from "lucide-react";
+import { Settings2, Play, ChevronDown, ChevronUp, X, Command, MoreVertical, ArrowBigUp } from "lucide-react";
 import { BlockSettings } from "../block-settings";
 import { type Block } from "@/app/types";
 import {
@@ -123,6 +123,7 @@ export function BlockControls({
               </div>
               <div className="flex items-center ml-2 text-xs gap-1 text-muted-foreground">
                 <Kbd><Command className="w-3 h-3" strokeWidth={1.5} /></Kbd>
+                <Kbd><ArrowBigUp className="w-3 h-3" strokeWidth={1.5} /></Kbd>
                 <Kbd>Delete</Kbd>
               </div>
             </div>
