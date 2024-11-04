@@ -1,6 +1,6 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
-import { Type, Hash, ListTree } from "lucide-react";
+import { Type, Hash, ListTree, Thermometer } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -20,16 +20,7 @@ export function SettingsBadges({ settings }: SettingsBadgesProps) {
         {/* Generation Type Badge */}
         <Tooltip>
           <TooltipTrigger asChild>
-            <Badge
-              variant="outline"
-              className={`
-              ${
-                settings.generateType === "text"
-                  ? "border-blue-200 bg-blue-50 text-blue-700"
-                  : "border-purple-200 bg-purple-50 text-purple-700"
-              }
-            `}
-            >
+            <Badge variant="outline">
               {settings.generateType === "text" ? (
                 <Type className="w-3 h-3 mr-1" />
               ) : (
@@ -44,11 +35,8 @@ export function SettingsBadges({ settings }: SettingsBadgesProps) {
         {/* Temperature Badge */}
         <Tooltip>
           <TooltipTrigger asChild>
-            <Badge
-              variant="outline"
-              className="border-orange-200 bg-orange-50 text-orange-700"
-            >
-              <div className="w-3 h-3 mr-1">°</div>
+            <Badge variant="outline">
+              <Thermometer className="w-3 h-3 mr-1" />
               {settings.temperature}
             </Badge>
           </TooltipTrigger>
@@ -58,10 +46,7 @@ export function SettingsBadges({ settings }: SettingsBadgesProps) {
         {/* Max Tokens Badge */}
         <Tooltip>
           <TooltipTrigger asChild>
-            <Badge
-              variant="outline"
-              className="border-green-200 bg-green-50 text-green-700"
-            >
+            <Badge variant="outline">
               <Hash className="w-3 h-3 mr-1" />
               {settings.maxTokens}
             </Badge>
@@ -73,10 +58,7 @@ export function SettingsBadges({ settings }: SettingsBadgesProps) {
         {settings.generateType === "object" && settings.schemaDefinition && (
           <Tooltip>
             <TooltipTrigger asChild>
-              <Badge
-                variant="outline"
-                className="border-indigo-200 bg-indigo-50 text-indigo-700 cursor-help"
-              >
+              <Badge variant="outline" className="cursor-help">
                 <ListTree className="w-3 h-3 mr-1" />
                 {settings.schemaDefinition.properties?.length || 0} fields
               </Badge>
@@ -87,7 +69,7 @@ export function SettingsBadges({ settings }: SettingsBadgesProps) {
                 <div className="space-y-1">
                   {settings.schemaDefinition.properties?.map((prop, i) => (
                     <div key={i} className="text-sm flex items-center gap-2">
-                      <span className="font-mono text-xs bg-indigo-100 px-1.5 py-0.5 rounded">
+                      <span className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">
                         {prop.name}
                       </span>
                       <span className="text-muted-foreground text-xs">

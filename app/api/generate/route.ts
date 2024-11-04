@@ -44,7 +44,7 @@ export async function POST(req: Request) {
       )
     }
 
-    const model = openai('gpt-4o-2024-08-06')
+    const model = openai('gpt-4o-mini')
 
     if (generateType === 'text') {
       console.log('\nMaking generateText call')

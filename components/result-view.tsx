@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import { Label } from "@/components/ui/label";
 import { Expand } from "lucide-react";
@@ -17,12 +15,9 @@ import { type ResultViewProps } from "../app/types";
 
 export function ResultView({ result, blockName }: ResultViewProps) {
   const resultString =
-    typeof result === "object"
-      ? JSON.stringify(result, null, 2)
-      : String(result);
+    typeof result === "object" ? JSON.stringify(result, null, 2) : String(result);
 
-  const truncatedResult =
-    resultString.slice(0, 200) + (resultString.length > 200 ? "..." : "");
+  const truncatedResult = resultString.slice(0, 200) + (resultString.length > 200 ? "..." : "");
 
   return (
     <div className="mt-4">
@@ -67,4 +62,4 @@ export function ResultView({ result, blockName }: ResultViewProps) {
       </Sheet>
     </div>
   );
-} 
+}

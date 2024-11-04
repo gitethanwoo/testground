@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,46 +15,38 @@ import { type Block } from "../app/types";
 
 interface BlockSettingsProps {
   block: Block;
-  onUpdate: (settings: Partial<Block["settings"]>) => void;
-  isOpen: boolean;
+  open: boolean;
   onOpenChange: (open: boolean) => void;
+  onSettingsChange: (id: string, settings: Partial<Block["settings"]>) => void;
 }
 
 export function BlockSettings({
   block,
-  onUpdate,
-  isOpen,
+  open,
   onOpenChange,
+  onSettingsChange,
 }: BlockSettingsProps) {
   return (
-    <Sheet open={isOpen} onOpenChange={onOpenChange}>
+    <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="w-[90vw] sm:max-w-[540px]">
         <SheetHeader>
           <SheetTitle>Block Settings: {block.name}</SheetTitle>
-          <SheetDescription>
-            Configure generation parameters for this block
-          </SheetDescription>
+          <SheetDescription>Configure generation parameters for this block</SheetDescription>
         </SheetHeader>
         <div className="space-y-6 py-4">
           <div className="space-y-2">
             <Label>Generation Type</Label>
             <div className="flex gap-4">
               <Button
-                variant={
-                  block.settings.generateType === "text" ? "default" : "outline"
-                }
-                onClick={() => onUpdate({ generateType: "text" })}
+                variant={block.settings.generateType === "text" ? "default" : "outline"}
+                onClick={() => onSettingsChange(block.id, { generateType: "text" })}
                 className="flex-1"
               >
                 Text
               </Button>
               <Button
-                variant={
-                  block.settings.generateType === "object"
-                    ? "default"
-                    : "outline"
-                }
-                onClick={() => onUpdate({ generateType: "object" })}
+                variant={block.settings.generateType === "object" ? "default" : "outline"}
+                onClick={() => onSettingsChange(block.id, { generateType: "object" })}
                 className="flex-1"
               >
                 Object
@@ -71,7 +61,7 @@ export function BlockSettings({
                 defaultValue={[block.settings.temperature ?? 0.7]}
                 max={2}
                 step={0.1}
-                onValueChange={([value]) => onUpdate({ temperature: value })}
+                onValueChange={([value]) => onSettingsChange(block.id, { temperature: value })}
               />
               <div className="text-sm text-muted-foreground mt-1">
                 Current value: {block.settings.temperature ?? 0.7}
@@ -87,25 +77,19 @@ export function BlockSettings({
             <Input
               type="number"
               value={block.settings.maxTokens ?? 1000}
-              onChange={(e) =>
-                onUpdate({ maxTokens: parseInt(e.target.value) })
-              }
+              onChange={(e) => onSettingsChange(block.id, { maxTokens: parseInt(e.target.value) })}
               min={1}
               max={4000}
             />
-            <p className="text-sm text-muted-foreground">
-              Maximum length of generated content
-            </p>
+            <p className="text-sm text-muted-foreground">Maximum length of generated content</p>
           </div>
 
           {block.settings.generateType === "object" && (
             <div className="space-y-2">
               <Label>Object Schema</Label>
               <SchemaBuilder
-                value={
-                  block.settings.schemaDefinition ?? { outputType: "object" }
-                }
-                onChange={(schema) => onUpdate({ schemaDefinition: schema })}
+                value={block.settings.schemaDefinition ?? { outputType: "object" }}
+                onChange={(schema) => onSettingsChange(block.id, { schemaDefinition: schema })}
               />
               <p className="text-sm text-muted-foreground">
                 Define the structure of the object to be generated
@@ -116,4 +100,4 @@ export function BlockSettings({
       </SheetContent>
     </Sheet>
   );
-} 
+}
